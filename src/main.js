@@ -5,6 +5,11 @@ import store from './store'
 
 Vue.config.productionTip = false
 
+const mock = true
+if (mock) {
+  require('./mock/api')
+}
+
 new Vue({
   router,
   store,
