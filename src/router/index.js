@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/home.vue'
+import Home from '../views/Home.vue'
 import Index from '../views/index.vue'
 Vue.use(VueRouter)
 
@@ -10,18 +10,19 @@ const routes = [
     name: 'Home',
     component: Home,
     redirect: '/index',
-    children: [{
-      path: 'index',
-      component: Index
-    },
-    {
-      path: 'product/:id',
-      component: () => import('../views/product.vue')
-    },
-    {
-      path: 'detail/:id',
-      component: () => import('../views/detail.vue')
-    }
+    children: [
+      {
+        path: 'index',
+        component: Index
+      },
+      {
+        path: 'product/:id',
+        component: () => import('../views/product.vue')
+      },
+      {
+        path: 'detail/:id',
+        component: () => import('../views/detail.vue')
+      }
     ]
   },
   {
@@ -33,9 +34,7 @@ const routes = [
 
     //   }
     // ]
-
   }
-
 ]
 
 const router = new VueRouter({

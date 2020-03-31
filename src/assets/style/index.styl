@@ -1,0 +1,29 @@
+@import './reset.styl';
+@import 'mixin.styl';
+@import 'config.styl';
+
+.container {
+  width: 1226px;
+  margin: 0 auto;
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+.clearfix:before, .clearfix:after {
+  content: ' ';
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+a {
+  color: $C;
+}
