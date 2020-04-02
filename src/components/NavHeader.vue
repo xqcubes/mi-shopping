@@ -36,12 +36,25 @@
     <div class="nav-header">
       <div class="container">
         <div class="header-logo">
-          <a href="javascript:;"></a>
+          <a
+            href="javascript:;"
+            id="qq"
+          ></a>
         </div>
         <div class="header-menu">
           <div class="header-menu-item">
             <a>小米手机</a>
             <ul class="children">
+              <li class="product">
+                <a>
+                  <img
+                    class="pro-img"
+                    src="/imgs/nav-img/nav-1.png"
+                  >
+                  <span class="pro-name">小米CC9</span>
+                  <span class="pro-price">￥1779.00元</span>
+                </a>
+              </li>
               <li class="product">
                 <a>
                   <img
@@ -71,7 +84,10 @@
             </ul>
           </div>
         </div>
-        <div class="header-search"></div>
+        <div class="header-search">
+          <input class="search-input">
+          <span class="search-btn"></span>
+        </div>
       </div>
     </div>
   </div>
@@ -83,8 +99,9 @@ export default {
 }
 </script>
 
-<style lang="stylus">
+<style lang="stylus" >
 @import '../assets/style/config.styl';
+@import '../assets/style/mixin.styl';
 
 .header {
   .nav-topbar {
@@ -142,16 +159,34 @@ export default {
         position: absolute;
         top: 50%;
         margin-top: -23px;
+        background: $B;
+        overflow: hidden;
 
         a {
           display: inline-block;
-          width: 55px;
+          width: 110px;
           height: 55px;
-          background: url('/imgs/mi-logo.png') no-repeat center $B;
 
-          // transition: 0.2s;
-          &:hover {
-            background: url('/imgs/mi-home.png') no-repeat center $B;
+          &:before {
+            display: inline-block;
+            content: '';
+            width: 55px;
+            height: 55px;
+            background: url('/imgs/mi-logo.png') no-repeat center;
+            transition: margin 0.2s;
+          }
+
+          &:after {
+            display: inline-block;
+            content: '';
+            width: 55px;
+            height: 55px;
+            background: url('/imgs/mi-home.png') no-repeat center;
+          }
+
+          &:hover:before {
+            margin-left: -55px;
+            transition: margin 0.2s;
           }
         }
       }
@@ -170,6 +205,23 @@ export default {
           color: $A;
           font-weight: bold;
           font-size: 16px;
+
+          .children {
+            position: absolute;
+
+            .product {
+              a {
+                .pro-img {
+                }
+
+                .pro-name {
+                }
+
+                .pro-price {
+                }
+              }
+            }
+          }
         }
       }
 
@@ -181,6 +233,23 @@ export default {
         top: 50%;
         margin-top: -25px;
         border: 1px solid #000;
+
+        .search-input {
+          width: 225px;
+          height: 50px;
+          padding-left: 20px;
+          line-height: 50px;
+          float: left;
+        }
+
+        .search-btn {
+          display: inline-block;
+          bgImg('/imgs/icon-search.png', 55px, 50px, 18px);
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
       }
     }
   }
