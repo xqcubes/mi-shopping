@@ -12,7 +12,7 @@ Vue.config.productionTip = false
 /**
  * mock模拟假数据
  */
-const mock = true
+const mock = false
 if (mock) {
   require('./mock/api')
 }

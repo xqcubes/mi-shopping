@@ -4,17 +4,26 @@
   </div>
 </template>
 
-<script> import { login } from '@/api'
+<script>
+// import { login, getHeaderProduct } from '@/api'
 
 export default {
-  mounted () {
-    login().then(res => {
-      console.log(res)
-    })
-  }
+  data() {
+    return {
+      headerData: []
+    }
+  },
+  async mounted() {
+    // login().then(res => {
+    //   console.log(res)
+    // })
+    /**
+     * 获取头部数据
+     */
+  },
+  methods: {}
 }
 </script>
 
 <style>
-
 </style>

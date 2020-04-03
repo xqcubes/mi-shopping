@@ -1,5 +1,5 @@
 const path = require('path')
-function resolve (dir) {
+function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
@@ -9,13 +9,12 @@ module.exports = {
     port: 8080,
     proxy: {
       '/api': {
-        target: 'https://dev-www.imooc.com',
+        target: 'http://mall-pre.springboot.cn',
         changeOrigin: true,
         pathRewrite: {
           api: ''
         }
       }
-
     }
   },
   configureWebpack: {

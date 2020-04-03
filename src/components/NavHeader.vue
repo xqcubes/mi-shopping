@@ -37,41 +37,37 @@
       <div class="container">
         <div class="header-logo">
           <a
-            href="javascript:;"
             id="qq"
-          ></a>
+            href="javascript:;"
+          />
         </div>
         <div class="header-menu">
           <div class="header-menu-item">
             <a>小米手机</a>
+
             <ul class="children">
-              <li class="product">
+              <li
+                v-for="(product,index) in headerData"
+                :key="index"
+                class="product"
+              >
                 <a>
                   <img
                     class="pro-img"
-                    src="/imgs/nav-img/nav-1.png"
+                    :src="product.mainImage"
                   >
-                  <span class="pro-name">小米CC9</span>
-                  <span class="pro-price">￥1779.00元</span>
+                  <div class="pro-name">{{ product.name }}</div>
+                  <div class="pro-price">￥{{ product.price | priceFilter }} 元</div>
                 </a>
               </li>
-              <li class="product">
-                <a>
-                  <img
-                    class="pro-img"
-                    src="/imgs/nav-img/nav-1.png"
-                  >
-                  <span class="pro-name">小米CC9</span>
-                  <span class="pro-price">￥1779.00元</span>
-                </a>
-              </li>
+
             </ul>
           </div>
           <div class="header-menu-item">
             <a>RedMi红米</a>
             <ul class="header-submenu">
               <li>
-                <a></a>
+                <a />
               </li>
             </ul>
           </div>
@@ -79,14 +75,14 @@
             <a>电视</a>
             <ul class="header-submenu">
               <li>
-                <a></a>
+                <a />
               </li>
             </ul>
           </div>
         </div>
         <div class="header-search">
           <input class="search-input">
-          <span class="search-btn"></span>
+          <span class="search-btn" />
         </div>
       </div>
     </div>
@@ -94,8 +90,31 @@
 </template>
 
 <script>
+import { getHeaderProduct } from '@/api'
 export default {
-  name: 'nav-header'
+  name: 'NavHeader',
+  filters: {
+    priceFilter(v) {
+      return v.toFixed(2)
+    }
+  },
+  data() {
+    return {
+      headerData: []
+    }
+  },
+  async mounted() {
+    this.getHeaderData()
+  },
+  methods: {
+    async getHeaderData() {
+      var headerData = await getHeaderProduct({
+        categoryId: '100012',
+        pageSize: 6
+      })
+      this.headerData = headerData.list
+    }
+  }
 }
 </script>
 
@@ -114,22 +133,22 @@ export default {
       a {
         height: 100%;
         display: inline-block;
+
+        &:hover {
+          color: $B;
+        }
       }
 
       .topbar-menu {
         height: inherit;
 
         li {
-          height: inherit;
           margin-right: 10px;
         }
       }
 
       .top-user {
-        height: inherit;
-
         li {
-          height: inherit;
           margin-left: 10px;
 
           .user-cart {
@@ -192,32 +211,83 @@ export default {
       }
 
       .header-menu {
-        position: absolute;
-        top: 50%;
-        left: 200px;
-        height: 30px;
-        line-height: 30px;
-        margin-top: -15px;
+        float: left;
+        margin-left: 200px;
+        height: 100%;
 
         .header-menu-item {
           display: inline-block;
+          padding: 41px 10px;
           margin-right: 20px;
           color: $A;
           font-weight: bold;
           font-size: 16px;
 
-          .children {
-            position: absolute;
+          &>a {
+            display: inline-block;
+            height: 30px;
+            line-height: 30px;
+          }
 
+          &>a:hover {
+            color: $B;
+          }
+
+          &:hover>a+ul {
+            height: 220px;
+            transition: height 0.4s;
+          }
+
+          .children {
+            transition: height 0.4s;
+            position: absolute;
+            width: 1226px;
+            height: 0;
+            left: 0;
+            top: 112px;
+            overflow: hidden;
+
+            // border: 1px solid #000;
             .product {
+              width: 16.6%;
+              float: left;
+              height: 100%;
+              box-sizing: border-box;
+              padding-top: 26px;
+              padding-bottom: 14px;
+
+              &:last-child>a:after {
+                border: none;
+              }
+
               a {
+                display: block;
+                text-align: center;
+                padding: 0 10px;
+                height: 100%;
+                position: relative;
+                font-size: 12px;
+
+                &:after {
+                  content: ' ';
+                  display: block;
+                  border-left: 1px solid #D7D7D7;
+                  height: 93px;
+                  position: absolute;
+                  right: 0;
+                  top: 0;
+                }
+
                 .pro-img {
+                  height: 112px;
                 }
 
                 .pro-name {
+                  margin: 5px 0;
                 }
 
                 .pro-price {
+                  color: $B;
                 }
               }
             }
@@ -232,10 +302,10 @@ export default {
         right: 0;
         top: 50%;
         margin-top: -25px;
-        border: 1px solid #000;
+        border: 1px solid #E0E0E0;
 
         .search-input {
-          width: 225px;
+          width: 224px;
           height: 50px;
           padding-left: 20px;
           line-height: 50px;
@@ -245,6 +315,7 @@ export default {
         .search-btn {
           display: inline-block;
           bgImg('/imgs/icon-search.png', 55px, 50px, 18px);
+          border-left: 1px solid #E0E0E0;
 
           &:hover {
             cursor: pointer;

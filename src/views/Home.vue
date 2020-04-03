@@ -1,8 +1,8 @@
 <template>
   <div class="home">
-    <nav-header></nav-header>home
+    <nav-header />
     <router-view />
-    <nav-footer></nav-footer>
+    <nav-footer />
   </div>
 </template>
 
