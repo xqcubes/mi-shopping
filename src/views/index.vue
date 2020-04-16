@@ -62,6 +62,60 @@
           />
         </swiper>
       </div>
+      <div class="ads-box">
+        <div class="container">
+          <a
+            v-for="ad in adsData"
+            :key="ad.id"
+            href="javascript:;"
+          >
+            <img v-lazy="ad.img">
+          </a>
+
+        </div>
+      </div>
+      <div class="banner">
+        <div class="container">
+          <a><img v-lazy="'imgs/banner-1.png'"></a>
+        </div>
+      </div>
+
+    </div>
+    <div class="product-box">
+      <div class="container">
+        <div class="title">
+          <span class="title-content">手机</span>
+          <a class="more">
+            <span>查看全部</span>
+          </a>
+        </div>
+        <div class="wrapper clearfix">
+          <div class="banner-left fl">
+            <a>
+              <img v-lazy="'/imgs/mix-alpha.jpg'">
+            </a>
+          </div>
+          <div class="list-box fl">
+            <ul>
+              <li
+                v-for="product in productData"
+                :key="product.id"
+                class="list-item fl"
+              >
+                <a>
+                  <span class="pro">新品</span>
+                  <img v-lazy="product.mainImage">
+                  <div class="name">{{ product.name }}</div>
+                  <div class="info">{{ product.subtitle }} </div>
+                  <div class="price">{{ product.price }}元</div>
+                </a>
+              </li>
+
+            </ul>
+          </div>
+
+        </div>
+      </div>
     </div>
 
   </div>
@@ -70,6 +124,7 @@
 <script>
 import { Swiper, SwiperSlide, directive } from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
+import { getProduct } from '@/api'
 export default {
   components: {
     Swiper,
@@ -328,7 +383,16 @@ export default {
             ]
           ]
         }
-      ]
+      ],
+      // 广告数据
+      adsData: [
+        { id: 1, href: '', img: '/imgs/ads/ads-1.png' },
+        { id: 2, href: '', img: '/imgs/ads/ads-2.jpg' },
+        { id: 3, href: '', img: '/imgs/ads/ads-3.png' },
+        { id: 4, href: '', img: '/imgs/ads/ads-4.jpg' }
+      ],
+      // 产品数据
+      productData: []
     }
   },
   computed: {
@@ -337,10 +401,15 @@ export default {
     }
   },
   async mounted() {
-    console.log('Current Swiper instance object', this.swiper)
     this.swiper.slideTo(3, 1000, false)
+    this.getIndexProduct()
   },
-  methods: {}
+  methods: {
+    async getIndexProduct() {
+      var data = await getProduct({ categoryId: 100012, pageSize: 8 })
+      this.productData = data.list
+    }
+  }
 }
 </script>
 
@@ -387,33 +456,39 @@ export default {
             background: url('/imgs/icon-arrow.png') no-repeat 220px 17px;
             background-size: 10px 15px;
             box-sizing: border-box;
+            color: #fff;
           }
 
           .children {
-            display: block;
+            display: none;
             position: absolute;
             left: 264px;
+            width: 962px;
             top: 0;
             height: 450px;
             background-color: #fff;
             font-size: 14px;
 
             ul {
-              overflow: hidden;
+              float: left;
 
               li {
+                float: left;
                 display: inline-block;
                 width: 240.5px;
                 height: 76px;
                 line-height: 76px;
                 box-sizing: border-box;
                 padding: 5px 10px;
-                float: left;
 
                 a {
                   display: block;
                   width: 100%;
                   height: 100%;
+
+                  &:hover {
+                    color: $B;
+                  }
 
                   img {
                     height: 42px;
@@ -439,6 +514,150 @@ export default {
         img {
           width: 100%;
           height: 450px;
+        }
+      }
+    }
+  }
+
+  .ads-box {
+    margin: 15px 0;
+
+    a {
+      display: inline-block;
+      margin-right: 14px;
+      width: 296px;
+      height: 167px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  .banner {
+    margin-bottom: 50px;
+
+    a {
+      display: block;
+
+      img {
+        width: 100%;
+        height: 130px;
+      }
+    }
+  }
+
+  .product-box {
+    background: rgba(245, 245, 245, 1);
+
+    .title {
+      height: 60px;
+
+      .title-content {
+        float: left;
+        font-size: 22px;
+        color: #333333;
+        font-family: FZLanTingHeiS-R-GB;
+        font-weight: bold;
+      }
+
+      .more {
+        float: right;
+        font-size: 16px;
+        color: #424242;
+
+        &:after {
+          content: '>';
+          margin-left: 8px;
+          display: inline-block;
+          width: 24px;
+          height: 24px;
+          background-color: #B0B0B0;
+          border-radius: 50%;
+          text-align: center;
+          line-height: 24px;
+          color: #fff;
+        }
+
+        &:hover {
+          color: $B;
+
+          &:after {
+            background-color: $B;
+          }
+        }
+      }
+    }
+
+    .wrapper {
+      .banner-left {
+        img {
+          width: 224px;
+          height: 619px;
+        }
+      }
+
+      .list-box {
+        width: 1002px;
+
+        .list-item {
+          margin-left: 14px;
+          margin-bottom: 14px;
+
+          a {
+            width: 236px;
+            height: 302px;
+            box-sizing: border-box;
+            background-color: #fff;
+            display: block;
+            text-align: center;
+
+            .pro {
+              display: inline-block;
+              height: 24px;
+              line-height: 24px;
+              font-size: 14px;
+              padding: 0 30px;
+              background: #7ECF68;
+              color: #fff;
+            }
+
+            .pro-new {
+              background: #7ECF68;
+            }
+
+            .pro-kill {
+              background: #E82626;
+            }
+
+            img {
+              width: 236px;
+              height: 195px;
+              display: block;
+            }
+
+            .name {
+              font-size: 14px;
+              color: #333333;
+              margin-bottom: 8px;
+            }
+
+            .info {
+              font-size: 12px;
+              color: #999999;
+              margin-bottom: 6px;
+            }
+
+            .price {
+              font-size: 14px;
+              color: #F20A0A;
+            }
+          }
         }
       }
     }

@@ -90,7 +90,7 @@
 </template>
 
 <script>
-import { getHeaderProduct } from '@/api'
+import { getProduct } from '@/api'
 export default {
   name: 'NavHeader',
   filters: {
@@ -108,7 +108,7 @@ export default {
   },
   methods: {
     async getHeaderData() {
-      var headerData = await getHeaderProduct({
+      var headerData = await getProduct({
         categoryId: '100012',
         pageSize: 6
       })
@@ -246,6 +246,9 @@ export default {
             left: 0;
             top: 112px;
             overflow: hidden;
+            z-index: 10;
+            background: #fff;
+            box-shadow: 0px 7px 6px 0px rgba(0, 0, 0, 0.11);
 
             // border: 1px solid #000;
             .product {

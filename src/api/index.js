@@ -9,9 +9,9 @@ export const login = () => {
   })
 }
 /**
- * 获取头部导航产品数据
+ * 获取头部导航产品数据, 首页商品
  */
-export const getHeaderProduct = (data) => {
+export const getProduct = (data) => {
   return request({
     url: '/products',
     params: data
